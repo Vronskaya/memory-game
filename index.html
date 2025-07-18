@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра Мемори</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Игра Мемори</h1>
+        
+        <div class="difficulty-selector" id="difficulty-selector">
+            <h2>Выберите уровень сложности:</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-level="easy">
+                    <span class="level-name">Лёгкий</span>
+                    <span class="level-info">6 карточек (3 пары)</span>
+                </button>
+                <button class="difficulty-btn" data-level="medium">
+                    <span class="level-name">Средний</span>
+                    <span class="level-info">12 карточек (6 пар)</span>
+                </button>
+                <button class="difficulty-btn" data-level="hard">
+                    <span class="level-name">Сложный</span>
+                    <span class="level-info">16 карточек (8 пар)</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="game-container" id="game-container" style="display: none;">
+            <div class="game-info">
+                <div class="score">Очки: <span id="score">0</span></div>
+                <div class="moves">Ходы: <span id="moves">0</span></div>
+                <div class="level">Уровень: <span id="current-level">Лёгкий</span></div>
+                <button id="restart-btn">Новая игра</button>
+                <button id="back-btn">Выбор уровня</button>
+            </div>
+            
+            <div class="game-board" id="game-board">
+                <!-- Cards will be generated dynamically -->
+            </div>
+            
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
