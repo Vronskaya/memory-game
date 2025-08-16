@@ -1,7 +1,16 @@
 class MemoryGame {
     constructor() {
-        // Game symbols for different difficulty levels
-        this.allSymbols = ['🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎸', '🎺', '🎻', '🎹', '🎼', '🎵', '🎶', '🎤', '🎧', '🎬'];
+        // Expanded game symbols for different difficulty levels
+        this.allSymbols = [
+            '🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎸', '🎺', 
+            '🎻', '🎹', '🎼', '🎵', '🎶', '🎤', '🎧', '🎬',
+            '🍎', '🍌', '🍒', '🍓', '🍑', '🍊', '🍋', '🍍',
+            '🥝', '🍇', '🥥', '🍉', '🍈', '🍅', '🥕', '🌽',
+            '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼',
+            '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔',
+            '⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏓', '🏸',
+            '🥊', '⛳', '🏹', '🎣', '🎿', '🛷', '🏂', '🏄'
+        ];
         this.cards = [];
         this.flippedCards = [];
         this.matchedPairs = 0;
@@ -13,7 +22,9 @@ class MemoryGame {
         this.difficultySettings = {
             easy: { pairs: 3, name: 'Лёгкий' },
             medium: { pairs: 6, name: 'Средний' },
-            hard: { pairs: 8, name: 'Сложный' }
+            hard: { pairs: 8, name: 'Сложный' },
+            expert: { pairs: 12, name: 'Экспертный' },
+            master: { pairs: 16, name: 'Мастерский' }
         };
         
         this.gameBoard = document.getElementById('game-board');
@@ -25,6 +36,8 @@ class MemoryGame {
         this.backBtn = document.getElementById('back-btn');
         this.difficultySelector = document.getElementById('difficulty-selector');
         this.gameContainer = document.getElementById('game-container');
+        this.heroSection = document.querySelector('.hero');
+        this.startGameBtn = document.getElementById('start-game-btn');
         
         this.init();
     }
@@ -73,6 +86,11 @@ class MemoryGame {
     }
     
     bindEvents() {
+        // Start game button
+        this.startGameBtn.addEventListener('click', () => {
+            this.showDifficultySelector();
+        });
+        
         // Difficulty selection
         document.querySelectorAll('.difficulty-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -137,7 +155,14 @@ class MemoryGame {
             secondElement.classList.add('matched');
             
             this.matchedPairs++;
-            this.score += 100;
+            const difficultyMultiplier = {
+                easy: 1,
+                medium: 1.5,
+                hard: 2,
+                expert: 2.5,
+                master: 3
+            };
+            this.score += Math.floor(100 * difficultyMultiplier[this.currentDifficulty]);
             this.updateScore();
             
             this.showMessage('Отличное совпадение! 🎉', 'success');
@@ -163,16 +188,31 @@ class MemoryGame {
     
     gameWon() {
         const optimalMoves = this.difficultySettings[this.currentDifficulty].pairs;
-        const bonusScore = Math.max(0, 500 - (this.moves - optimalMoves) * 20);
+        const difficultyMultiplier = {
+            easy: 1,
+            medium: 1.5,
+            hard: 2,
+            expert: 2.5,
+            master: 3
+        };
+        
+        const baseBonus = 500 * difficultyMultiplier[this.currentDifficulty];
+        const bonusScore = Math.max(0, baseBonus - (this.moves - optimalMoves) * 20);
         this.score += bonusScore;
         this.updateScore();
         
+        let trophy = '🎊';
+        if (this.currentDifficulty === 'master') trophy = '👑';
+        else if (this.currentDifficulty === 'expert') trophy = '🏆';
+        else if (this.currentDifficulty === 'hard') trophy = '🥇';
+        
         this.messageElement.innerHTML = `
             <div class="win-message">
-                🎊 Поздравляем! Вы выиграли! 🎊<br>
+                ${trophy} Поздравляем! Вы выиграли! ${trophy}<br>
                 Уровень: ${this.difficultySettings[this.currentDifficulty].name}<br>
                 Итоговый счёт: ${this.score}<br>
                 Количество ходов: ${this.moves}
+                ${this.moves <= optimalMoves ? '<br>🎯 Идеальный результат!' : ''}
             </div>
         `;
         
@@ -215,6 +255,7 @@ class MemoryGame {
         this.currentDifficulty = difficulty;
         this.currentLevelElement.textContent = this.difficultySettings[difficulty].name;
         
+        this.heroSection.style.display = 'none';
         this.difficultySelector.style.display = 'none';
         this.gameContainer.style.display = 'block';
         
@@ -226,7 +267,14 @@ class MemoryGame {
     }
     
     showDifficultySelector() {
+        this.heroSection.style.display = 'none';
         this.difficultySelector.style.display = 'block';
+        this.gameContainer.style.display = 'none';
+    }
+    
+    showMainMenu() {
+        this.heroSection.style.display = 'flex';
+        this.difficultySelector.style.display = 'none';
         this.gameContainer.style.display = 'none';
     }
     

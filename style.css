@@ -17,7 +17,7 @@ body {
 .container {
     text-align: center;
     padding: 20px;
-    max-width: 600px;
+    max-width: 1200px;
     width: 100%;
 }
 
@@ -63,6 +63,28 @@ h1 {
     gap: 5px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
+.difficulty-btn[data-level="easy"] {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.difficulty-btn[data-level="medium"] {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.difficulty-btn[data-level="hard"] {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.difficulty-btn[data-level="expert"] {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.difficulty-btn[data-level="master"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+
 
 .difficulty-btn:hover {
     transform: translateY(-3px);
@@ -132,7 +154,7 @@ h1 {
 
 .game-board {
     display: grid;
-    gap: 15px;
+    gap: 12px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -152,6 +174,18 @@ h1 {
     max-width: 600px;
 }
 
+.game-board.expert {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 500px;
+    gap: 10px;
+}
+
+.game-board.master {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 500px;
+    gap: 8px;
+}
+
 .card {
     width: 120px;
     height: 120px;
@@ -162,7 +196,30 @@ h1 {
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: rotateY(0deg);
 }
+
+.game-board.expert .card {
+    width: 100px;
+    height: 100px;
+}
+
+.game-board.master .card {
+    width: 90px;
+    height: 90px;
+}
+
+.game-board.expert .card-front, 
+.game-board.expert .card-back {
+    font-size: 2.5em;
+}
+
+.game-board.master .card-front, 
+.game-board.master .card-back {
+    font-size: 2.2em;
+}
+
+
 
 .card:hover {
     transform: translateY(-5px);
@@ -280,9 +337,41 @@ h1 {
         max-width: 360px;
     }
     
+    .game-board.expert {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 320px;
+        gap: 8px;
+    }
+    
+    .game-board.master {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 360px;
+        gap: 6px;
+    }
+    
     .card {
         width: 100px;
         height: 100px;
+    }
+    
+    .game-board.expert .card {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .game-board.master .card {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .game-board.expert .card-front, 
+    .game-board.expert .card-back {
+        font-size: 2em;
+    }
+    
+    .game-board.master .card-front, 
+    .game-board.master .card-back {
+        font-size: 1.8em;
     }
     
     .game-info {
