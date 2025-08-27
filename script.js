@@ -291,3 +291,10 @@ class MemoryGame {
 document.addEventListener('DOMContentLoaded', () => {
     new MemoryGame();
 }); 
+
+// PWA: регистрация сервис-воркера
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js');
+  });
+} 
